@@ -5,7 +5,29 @@ body, body > * {
     justify-content: center;
 }
 
+.status {
+    visibility: hidden;
+    padding-top: 30px;
+    display: grid;
+    column-gap: 40px;
+    grid-template: 1fr 1fr / 1fr 1fr;
+}
+
+.status > * {
+    text-align: center;
+}
+
+
+.playerOne, .playerTwo {
+    display: flex;
+    flex-direction: column;
+}
+
 .gameboard {
+    visibility: hidden;
+    background-color: black;
+    gap: 2px;
+    border:2px solid black;
     margin-top: 40px;
     height: 400px;
     width: 400px;
@@ -16,16 +38,26 @@ body, body > * {
     "midleft midcenter midright"
     "btmleft btmcenter btmright";
     font-size: 60px;
+    transition: visibility 0.3s ease;
 }
 
 .move {
     display: flex;
+    background-color: #fff;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: rgba(0,0,0,0);
+    transition: color 0.2s ease-in-out;
+}
+
+.move.show {
+    color: rgb(217, 55, 55);
+    transition: color 0.4s ease-in-out;
 }
 
 .move:hover {
-    background-color: blue;
+    background-color: rgb(225, 225, 225);
     cursor: pointer;
+    transition: all 0.3s ease;
 }

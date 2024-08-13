@@ -6,6 +6,7 @@
     <title>Tic-Tac Toe</title>
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./styles.css" type="text/css">
+    <link rel="stylesheet" href="./normalize.css" type="text/css">
 </head>
 <body>
     
@@ -29,23 +30,28 @@
             </dialog>
         </div>
 
+
     </div>  
 
     <div class="main">
 
         <div class="status">
+            <div class="playerOne">Player One <span id="playerNickName"></span></div>
+            <div class="playerTwo">Player Two <i>Computer</i></div>
+            <div class="playerOneScore">0</div>
+            <div class="playerTwoScore">0</div>
         </div>
 
         <div class="gameboard">
             <div class="move" id="topleft"></div>
-            <div class="move" id="topcenter">X</div>
-            <div class="move" id="topright">X</div>
-            <div class="move" id="midleft">X</div>
-            <div class="move" id="midcenter">X</div>
-            <div class="move" id="midright">X</div>
-            <div class="move" id="btmleft">X</div>
-            <div class="move" id="btmcenter">X</div>
-            <div class="move" id="btmright">X</div>
+            <div class="move" id="topcenter"></div>
+            <div class="move" id="topright"></div>
+            <div class="move" id="midleft"></div>
+            <div class="move" id="midcenter"></div>
+            <div class="move" id="midright"></div>
+            <div class="move" id="btmleft"></div>
+            <div class="move" id="btmcenter"></div>
+            <div class="move" id="btmright"></div>
         </div>
 
     </div>

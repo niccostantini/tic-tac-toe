@@ -1,6 +1,8 @@
 /** SET UP */
 
 const cells = document.querySelectorAll(".move");
+const playernameUI = document.querySelector("#playerNickName");
+const gameboardUI = document.querySelector(".gameboard");
 
 const gameboard = (() => {
     let grid = {
@@ -16,6 +18,7 @@ const gameboard = (() => {
                 document.getElementById(key).textContent = ''; // Clear the UI
             }
         }
+        gameboard.updateUI();
     };
 
     const isFilled = () => {
@@ -23,6 +26,7 @@ const gameboard = (() => {
     };
 
     const updateUI = () => {
+
         for (let key in grid) {
             if (grid.hasOwnProperty(key)) {
                 document.getElementById(key).textContent = grid[key] || '';
@@ -30,7 +34,14 @@ const gameboard = (() => {
         }
     };
 
-    return {grid, reset, isFilled, updateUI}
+    const updateScore = () => {
+        const playerOneScore = document.querySelector(".playerOneScore");
+        const playerTwoScore = document.querySelector(".playerTwoScore");
+        playerOneScore.textContent = playerOne.getScore();
+        playerTwoScore.textContent = playerTwo.getScore();
+    }
+
+    return {grid, reset, isFilled, updateUI, updateScore}
 })()
 
 let playerOne;
@@ -54,8 +65,11 @@ startButton.addEventListener("click", () => {
     let userNick = formData.get("userNickName");
     let userChoice = formData.get("userChoice");
     let computerChoice = (userChoice == "O" ? "X" : "O");
-    playerOne = makePlayer(userNick, userChoice);
-    playerTwo = makePlayer("Computer", computerChoice);
+    playerOne = makePlayer(userNick, userChoice, 0);
+    playerTwo = makePlayer("Computer", computerChoice, 0);
+    playernameUI.textContent = playerOne.getNickName();
+    document.querySelector(".status").style.visibility = "visible";
+    gameboardUI.style.visibility = "visible";
     formDialog.close();
 
 })
@@ -65,9 +79,10 @@ const initialise = (name, choice) => {
 }
 
 
-const makePlayer = (name, choice) => {
+const makePlayer = (name, choice, score) => { 
     const getNickName = () => name;
     const getChoice = () => choice;
+    const getScore = () => score;
 
     const makeMove = (position) => { // Accept 'position' as a parameter
 
@@ -75,49 +90,34 @@ const makePlayer = (name, choice) => {
 
             const grid = gameboard.grid;
 
-            for (let i = 0; i < 3; i++) {
+            function winner() { //Declares winner, gives one point to winner, resets board, updates score on screen
                 let message = `The winner is ${name}! Game reset`;
+                alert(`The winner is ${name}!`);
+                console.log(message);
+                gameboard.reset();
+                score++;
+                gameboard.updateScore(); 
+                winner = name;
+            }
+
+            for (let i = 0; i < 3; i++) {
 
                 if (grid.topleft === choice && grid.topcenter === choice && grid.topright === choice){
-                        alert(`The winner is ${name}!`);
-                        console.log(message);
-                        gameboard.reset();
-                        winner = name;
+                    winner()
                 } else if (grid.midleft === choice && grid.midcenter === choice && grid.midright === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.btmleft === choice && grid.btmcenter === choice && grid.btmright === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.topleft === choice && grid.midleft === choice && grid.btmleft === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.topcenter === choice && grid.midcenter === choice && grid.btmcenter === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.topright === choice && grid.midright === choice && grid.btmright === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.topleft === choice && grid.midcenter === choice && grid.btmright === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } else if (grid.topright === choice && grid.midcenter === choice && grid.btmleft === choice){
-                    alert(`The winner is ${name}!`);
-                    console.log(message);
-                    gameboard.reset();
-                    winner = name;
+                    winner()
                 } 
 
                 if (gameboard.isFilled()) {
@@ -168,15 +168,32 @@ const makePlayer = (name, choice) => {
                 checkWinner();
             }
         }
+
+        // Add the fade-in effect after updating the UI
+        const moveElement = document.getElementById(position);
+        moveElement.classList.add('show'); // Apply the .show class to trigger the fade-in
+
     } 
 
-    return {getNickName, getChoice, makeMove}
+    return {getNickName, getChoice, makeMove, getScore}
 
 }
 
 cells.forEach(cell => cell.addEventListener("click", (e) => {
+
     let position = e.target.id;
+
     playerOne.makeMove(position);
-    if (winner == undefined && move == "valid") {playerTwo.makeMove()}
-    else {winner = undefined};
+
+    if (winner == undefined && move == "valid") {
+        setTimeout(() => {
+            playerTwo.makeMove();
+        }, 333); // 500 milliseconds = 1/3 second delay
+    }
+    else if (winner != undefined) {
+        winner = undefined;
+        setTimeout(() => {
+            playerTwo.makeMove();
+        }, 150)
+    };
 }))
