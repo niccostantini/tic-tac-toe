@@ -3,6 +3,7 @@
 const cells = document.querySelectorAll(".move");
 const playernameUI = document.querySelector("#playerNickName");
 const gameboardUI = document.querySelector(".gameboard");
+const resetButton = document.querySelector("#reset");
 
 const gameboard = (() => {
     let grid = {
@@ -53,6 +54,10 @@ let move = "valid";
 const startButton = document.querySelector("#start");
 const formDialog = document.querySelector("#choosePlayers");
 const form = document.querySelector("#createPlayer");
+
+resetButton.addEventListener("click", () =>{
+    formDialog.close();
+} )
 
 startButton.addEventListener("click", () => {
     formDialog.showModal();
