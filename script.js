@@ -64,12 +64,15 @@ startButton.addEventListener("click", () => {
     const formData = new FormData(form);
     let userNick = formData.get("userNickName");
     let userChoice = formData.get("userChoice");
-    let computerChoice = (userChoice == "O" ? "X" : "O");
-    playerOne = makePlayer(userNick, userChoice, 0);
+    let computerChoice = (userChoice == "O" ? "X" : "O");      //Initialise choice
+    playerOne = makePlayer(userNick, userChoice, 0);       //Initialise players
     playerTwo = makePlayer("Computer", computerChoice, 0);
-    playernameUI.textContent = playerOne.getNickName();
+    playernameUI.textContent = playerOne.getNickName();    //Reset .status bar
+    gameboard.updateScore();
     document.querySelector(".status").style.visibility = "visible";
+    gameboard.reset();
     gameboardUI.style.visibility = "visible";
+    startButton.value = "RESET";
     formDialog.close();
 
 })

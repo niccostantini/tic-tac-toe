@@ -11,21 +11,27 @@
 <body>
     
     <div class="header">
-        <h1>Tic Tac Toe</h1>
+        <h1>Tic &#x25ef; Tac &cross; Toe</h1>
 
 
         <div class="commands">
             <input type="button" value="START" id="start">
             <dialog id="choosePlayers">
                 <form id="createPlayer">
-                    <label for="userNickName">User Nickname</label> <input type="text" name="userNickName" id="userNickName">
-                    <label for="userChoice">User Choice</label>
-                    <select id="userChoice" name="userChoice">
-                        <option>O</option>
-                        <option>X</option>
-                    </select>
-                    <input type="submit" value="Let's go" id="submit">
-                    <input type="reset" value="Cancel" id="cancel">
+                    <div class="formElement"><label for="userNickName">YOUR NICKNAME</label> <input type="text" name="userNickName" id="userNickName"></div>
+                    <div class="formElement">
+                        <label for="userChoice">YOUR CHOICE</label>
+                        <select id="userChoice" name="userChoice">
+                            <option>O</option>
+                            <option>X</option>
+                            <option>♩</option>
+                            <option>&#9760;</option>
+                        </select>
+                    </div>
+                    <div class="formElement buttons">
+                        <input type="submit" value="Yalla!" id="submit">
+                        <input type="reset" value="Cancel" id="cancel">
+                     </div>
                 </form>
             </dialog>
         </div>

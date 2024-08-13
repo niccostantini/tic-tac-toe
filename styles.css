@@ -1,8 +1,101 @@
+@font-face {
+    font-family: Pacifico;
+    src: url(./assets/fonts/Pacifico-Regular.woff2);
+}
+
+@font-face {
+    font-family: "Shantell Sans";
+    src: url(./assets/fonts/ShantellSans-Medium.ttf);
+}
+
+@font-face {
+    font-family: "Space Grotesk";
+    src: url("./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf")
+      format("truetype-variations");
+  }
+
 body, body > * {
+    font-family: "Space Grotesk";
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.commands {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    background-color: black;
+    color:white;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 9px 25px;
+    border: 3px solid rgb(0, 0, 0);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.345);
+    transform: translateY(0px) translateX(0px);
+    transition: all 0.2s ease;
+}
+
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+    box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.345);
+    transform: translateY(2px) translateX(2px);
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    outline: auto 1px white;
+}
+
+input[type="text"],
+select {
+    border-radius: 5px;
+    border: 0.5px solid;
+    padding: 5px 10px;
+    outline: none;
+    transition: all 0.1s ease;
+
+}
+
+input[type="text"]:focus,
+select:focus {
+    transition: all 0.1s ease;
+    border: 2px black solid;
+}
+
+#choosePlayers[open] {
+    width: 33vw;
+}
+
+form, .formElement {
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+}
+
+form {
+    gap: 20px;
+}
+
+form label {
+    letter-spacing: 1px;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.formElement.buttons {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+h1 {
+    font-family: Pacifico, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .status {
@@ -11,7 +104,20 @@ body, body > * {
     display: grid;
     column-gap: 40px;
     grid-template: 1fr 1fr / 1fr 1fr;
+    font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 40px;
 }
+
+.status > :nth-child(1),
+.status > :nth-child(2) {
+    font-size: 10px;
+}
+
+.status > :nth-child(1) > *,
+.status > :nth-child(2) > * {
+    font-size: 1rem;
+}
+
 
 .status > * {
     text-align: center;
@@ -21,6 +127,13 @@ body, body > * {
 .playerOne, .playerTwo {
     display: flex;
     flex-direction: column;
+}
+
+.playerOneScore, .playerTwoScore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .gameboard {
@@ -39,6 +152,7 @@ body, body > * {
     "btmleft btmcenter btmright";
     font-size: 60px;
     transition: visibility 0.3s ease;
+    font-family: "Shantell Sans", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .move {
@@ -52,7 +166,7 @@ body, body > * {
 }
 
 .move.show {
-    color: rgb(217, 55, 55);
+    color: rgb(65, 65, 65);
     transition: color 0.4s ease-in-out;
 }
 
