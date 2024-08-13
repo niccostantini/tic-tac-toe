@@ -1,27 +1,48 @@
 /** SET UP */
 
+const cells = document.querySelectorAll(".move");
+
 const gameboard = (() => {
-    let grid = [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined]
-    
+    let grid = {
+        topleft: undefined, topcenter: undefined, topright: undefined,
+        midleft: undefined, midcenter: undefined, midright: undefined,
+        btmleft: undefined, btmcenter: undefined, btmright: undefined
+    };
+
     const reset = () => {
-        for (let i = 0; i < grid.length; i++) {
-            grid[i] = undefined;
+        for (let key in grid) {
+            if (grid.hasOwnProperty(key)) {
+                grid[key] = undefined;
+                document.getElementById(key).textContent = ''; // Clear the UI
+            }
         }
     };
 
     const isFilled = () => {
-        return grid.every(cell => cell != undefined);
+        return Object.values(grid).every(cell => cell != undefined);
     };
 
-    return {grid, reset, isFilled}
+    const updateUI = () => {
+        for (let key in grid) {
+            if (grid.hasOwnProperty(key)) {
+                document.getElementById(key).textContent = grid[key] || '';
+            }
+        }
+    };
+
+    return {grid, reset, isFilled, updateUI}
 })()
 
 let playerOne;
 let playerTwo;
+let winner = undefined;
+let move = "valid";
+
 
 const startButton = document.querySelector("#start");
 const formDialog = document.querySelector("#choosePlayers");
 const form = document.querySelector("#createPlayer");
+
 startButton.addEventListener("click", () => {
     formDialog.showModal();
 })
@@ -48,49 +69,56 @@ const makePlayer = (name, choice) => {
     const getNickName = () => name;
     const getChoice = () => choice;
 
-    const makeMove = (n = 0) => {
+    const makeMove = (position) => { // Accept 'position' as a parameter
 
         function checkWinner () {   /**CHECKS IF THE MOVE RESULTED IN A VICTORY BY THE PLAYER */
-            const gridTemplate = [
-                [0,1,2],
-                [3,4,5],
-                [6,7,8]
-            ] 
-            var winner;
+
             const grid = gameboard.grid;
-            /**CI VUOLE IL CICLO FOR SENNò NON VEDE TUTTE LE POSSIBILITà */
 
             for (let i = 0; i < 3; i++) {
                 let message = `The winner is ${name}! Game reset`;
-                if (grid[gridTemplate[i][0]] == choice         /**CHECK HORIZONTALLY*/
-                    && grid[gridTemplate[i][1]] == choice
-                    && grid[gridTemplate[i][2]] == choice) {
+
+                if (grid.topleft === choice && grid.topcenter === choice && grid.topright === choice){
                         alert(`The winner is ${name}!`);
                         console.log(message);
-                        gameboard.reset()
+                        gameboard.reset();
                         winner = name;
-                } else if (grid[gridTemplate[0][i]] == choice  /**CHECK VERTICALLY*/
-                    && grid[gridTemplate[1][i]] == choice
-                    && grid[gridTemplate[2][i]] == choice) {
-                        alert(message);
-                        console.log(message);
-                        winner = name;
-                } else if (grid[gridTemplate[0][0]] == choice  /**CHECK ACROSS*/
-                    && grid[gridTemplate[1][1]] == choice
-                    && grid[gridTemplate[2][2]] == choice) {
-                        console.log(message);
-                        alert(message);
-                        winner = name;
-                    break; //need to break otherwise will win 3 times (i count)
-                    
-                } else if (grid[gridTemplate[0][2]] == choice  
-                    && grid[gridTemplate[1][1]] == choice
-                    && grid[gridTemplate[2][0]] == choice) {
-                        console.log(message);
-                        alert(message);
-                        winner = name;
-                    break; //see above
-                };}
+                } else if (grid.midleft === choice && grid.midcenter === choice && grid.midright === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.btmleft === choice && grid.btmcenter === choice && grid.btmright === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.topleft === choice && grid.midleft === choice && grid.btmleft === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.topcenter === choice && grid.midcenter === choice && grid.btmcenter === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.topright === choice && grid.midright === choice && grid.btmright === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.topleft === choice && grid.midcenter === choice && grid.btmright === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } else if (grid.topright === choice && grid.midcenter === choice && grid.btmleft === choice){
+                    alert(`The winner is ${name}!`);
+                    console.log(message);
+                    gameboard.reset();
+                    winner = name;
+                } 
 
                 if (gameboard.isFilled()) {
                     gameboard.reset();
@@ -98,47 +126,57 @@ const makePlayer = (name, choice) => {
                 }
         return {winner}
         };
+    }
 
-        function getRandomEmptyIndex() {
-            console.log("Current Grid:", gameboard.grid); // Log the grid for debugging
-            let emptyIndices = [];
-        
-            // Collect all indices where the grid element is empty (undefined or null)
-            gameboard.grid.forEach((value, index) => {
-                if (value == undefined) {
-                    emptyIndices.push(index);
-                }
-            });
-        
-            // If there are no empty indices, return null or handle as needed
-            if (emptyIndices.length === 0) {
-                return null;
+    function getRandomEmptyIndex() {
+        console.log("Current Grid:", gameboard.grid); // Log the grid for debugging
+        let emptyKeys = [];
+    
+        // Collect all keys where the grid element is empty (undefined)
+        for (let key in gameboard.grid) {
+            if (gameboard.grid[key] === undefined) {
+                emptyKeys.push(key);
             }
-        
-            // Generate a random index from the emptyIndices array
-            const randomIndex = Math.floor(Math.random() * emptyIndices.length);
-            return emptyIndices[randomIndex];
         }
-        
-        
-
+    
+        // If there are no empty keys, return null or handle as needed
+        if (emptyKeys.length === 0) {
+            return null;
+        }
+    
+        // Generate a random key from the emptyKeys array
+        const randomIndex = Math.floor(Math.random() * emptyKeys.length);
+        return emptyKeys[randomIndex];
+    }
+    
         if (name == "Computer") {  /**RANDOMISE COMPUTER'S MOVE */
 
-            // n = getRandomEmptyIndex();
-            gameboard.grid[n] = choice;
+            position = getRandomEmptyIndex();
+            gameboard.grid[position] = choice;
+            gameboard.updateUI(); // Update the UI to reflect the move
             checkWinner();
 
-        } else if (name != "Computer") {  /**USER'S MOVE */
+        } else { /**USER'S MOVE */
 
-            if (gameboard.grid[n] != undefined) {
-                alert(`${name}, that square is already taken, choose another!`)
-                }
-            else if (gameboard.grid[n] == undefined) {
-
-                gameboard.grid[n] = choice;
-                checkWinner();}
+            if (gameboard.grid[position] !== undefined) {
+                alert(`${name}, that square is already taken, choose another!`);
+                move = "invalid";
+            } else {
+                gameboard.grid[position] = choice;
+                move = "valid";
+                gameboard.updateUI(); // Update the UI to reflect the move
+                checkWinner();
+            }
         }
     } 
 
     return {getNickName, getChoice, makeMove}
+
 }
+
+cells.forEach(cell => cell.addEventListener("click", (e) => {
+    let position = e.target.id;
+    playerOne.makeMove(position);
+    if (winner == undefined && move == "valid") {playerTwo.makeMove()}
+    else {winner = undefined};
+}))
