@@ -14,17 +14,31 @@
       format("truetype-variations");
   }
 
-body, body > * {
+@keyframes myFadeIn{
+    from {
+        opacity: 0;
+    }
+    to {
+
+        opacity: 1;
+    }
+} 
+
+
+
+body {
     font-family: "Space Grotesk";
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    height: 100vh; /* Ensure the body takes the full viewport height */
 }
 
 .commands {
     padding-top: 10px;
     padding-bottom: 30px;
+    text-align: center;
 }
 
 input[type="button"],
@@ -79,7 +93,7 @@ select:focus {
 }
 
 #choosePlayers[open] {
-    width: 33vw;
+    animation: myFadeIn 0.5s ease normal;
 }
 
 form, .formElement {
@@ -151,9 +165,9 @@ h1 {
     background-color: black;
     gap: 2px;
     border:2px solid black;
-    margin-top: 40px;
-    height: 400px;
-    width: 400px;
+    margin-top: 30px;
+    height: 370px;
+    width: 370px;
     display: grid;
     grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
     grid-template-areas:
@@ -161,7 +175,7 @@ h1 {
     "midleft midcenter midright"
     "btmleft btmcenter btmright";
     font-size: 60px;
-    transition: visibility 0.3s ease;
+    animation: myFadeIn 0.5s ease normal;
     font-family: "Shantell Sans", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -184,4 +198,35 @@ h1 {
     background-color: rgb(225, 225, 225);
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.footer {
+    color:#fff;
+    background-color: #5b5b5b;
+    margin: 10px 0 0px 0;
+    width: 100vw;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.credits {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: center;
+    gap: 3px;
+    padding: 9px;
+}
+
+.credits img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(273deg) brightness(102%) contrast(103%);
+}
+
+a {
+    text-decoration: none;
+    font-weight: 700;
+    color: #fff;
 }
