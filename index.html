@@ -5,20 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac Toe</title>
     <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" type="text/css">
 </head>
 <body>
-    <input type="button" value="START" id="start">
-    <dialog id="choosePlayers">
-        <form id="createPlayer">
-            <label for="userNickName">User Nickname</label> <input type="text" name="userNickName" id="userNickName">
-            <label for="userChoice">User Choice</label>
-            <select id="userChoice" name="userChoice">
-                <option>O</option>
-                <option>X</option>
-            </select>
-            <input type="submit" value="Let's go" id="submit">
-            <input type="reset" value="Cancel" id="cancel">
-        </form>
-    </dialog>
+    
+    <div class="header">
+        <h1>Tic Tac Toe</h1>
+
+
+        <div class="commands">
+            <input type="button" value="START" id="start">
+            <dialog id="choosePlayers">
+                <form id="createPlayer">
+                    <label for="userNickName">User Nickname</label> <input type="text" name="userNickName" id="userNickName">
+                    <label for="userChoice">User Choice</label>
+                    <select id="userChoice" name="userChoice">
+                        <option>O</option>
+                        <option>X</option>
+                    </select>
+                    <input type="submit" value="Let's go" id="submit">
+                    <input type="reset" value="Cancel" id="cancel">
+                </form>
+            </dialog>
+        </div>
+
+    </div>  
+
+    <div class="main">
+
+        <div class="status">
+        </div>
+
+        <div class="gameboard">
+            <div class="move" id="topleft"></div>
+            <div class="move" id="topcenter">X</div>
+            <div class="move" id="topright">X</div>
+            <div class="move" id="midleft">X</div>
+            <div class="move" id="midcenter">X</div>
+            <div class="move" id="midright">X</div>
+            <div class="move" id="btmleft">X</div>
+            <div class="move" id="btmcenter">X</div>
+            <div class="move" id="btmright">X</div>
+        </div>
+
+    </div>
 </body>
 </html>
