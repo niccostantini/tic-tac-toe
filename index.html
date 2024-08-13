@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac Toe</title>
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
 </head>
 <body>
-    
+    <input type="button" value="START" id="start">
+    <dialog id="choosePlayers">
+        <form id="createPlayer">
+            <label for="userNickName">User Nickname</label> <input type="text" name="userNickName" id="userNickName">
+            <label for="userChoice">User Choice</label>
+            <select id="userChoice" name="userChoice">
+                <option>O</option>
+                <option>X</option>
+            </select>
+            <input type="submit" value="Let's go" id="submit">
+            <input type="reset" value="Cancel" id="cancel">
+        </form>
+    </dialog>
 </body>
 </html>
