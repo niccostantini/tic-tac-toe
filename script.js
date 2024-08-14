@@ -16,8 +16,10 @@ const gameboard = (() => {
         for (let key in grid) {
             if (grid.hasOwnProperty(key)) {
                 grid[key] = undefined;
-                document.getElementById(key).textContent = ''; // Clear the UI
-            }
+                const cell = document.getElementById(key);
+                cell.textContent = undefined; // Clear the UI
+                cell.classList.remove('show'); // Remove the .show class to reset the fade-in effect
+                }
         }
         gameboard.updateUI();
     };
